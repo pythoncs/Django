@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-1.12.4.min.js"></script>
+    <script>
+        {#发起请求 传入接口#}
+        {#function(){}:回调函数#}
+        $(function () {
+            $.get('/get_province/', function (back) {
+                {#$.each():遍历 back.data:元数据（是一个字典） index:索引 data:字典中的每个值#}
+                $.each(back.data, function (index, data) {
+
+                    select = $('#province');
+                    select.append('<option value=' + data['id'] + '>' + data['name'] + '</option>')
+                });
+            });
+
+            {#当省份发生改变时发生改变#}
+            $('#province').change(function () {
+                city = $('#city');
+                district = $('#district')
+                district.empty()
+                city.empty();
+                city.append('<option value="province">请选择市</option>')
+                district.append('<option value="province">请选择区</option>')
+
+                {#获取确定的省份id#}
+                $.post('/' + $(this).val() + '/', function (dic) {
+                    $.each(dic.data, function (index, item) {
+                        city.append('<option value=' + item['id'] + '>' + item['name'] + '</option>')
+                    });
+                });
+            });
+            {#当市改变时，获取这个市的id拼接接口url，把结果给回调函数dic，遍历dic将获取的ID和name添加到select 中的option标签#}
+            $('#city').change(function () {
+                {#district = $('#district');#}
+                district.empty();
+                district.append('<option value="province">请选择区</option>')
+                $.post('/' + $(this).val() + '/', function (dic) {
+                    $.each(dic.data, function (index, item) {
+                        district.append('<option value=' + item['id'] + '>' + item['name'] + '</option>');
+
+                    });
+                });
+
+            });
+        })
+
+
+    </script>
+
+
+</head>
+<body>
+<select name="" id="province">请选择省
+    <option value="province">请选择省</option>
+
+</select>
+
+<select name="" id="city">请选择市
+    <option value="city">请选择市</option>
+
+</select>
+
+<select name="" id="district">请选择区
+    <option value="district">请选择区</option>
+
+</select>
+
+</body>
+</html>

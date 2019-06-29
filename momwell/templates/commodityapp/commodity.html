@@ -1,0 +1,150 @@
+{% extends 'commodityapp/base.html' %}
+
+{% block nav %}
+
+    <div class="content content-nav-base commodity-content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <div class="inner-cont1 w1200">
+                <div class="inner-cont2">
+                    <a href="{% url 'commodity:commoditys' '' '' '' %}" class="active">所有商品</a>
+                    <a href="{% url 'commodity:buyToday' %}">今日团购</a>
+                    <a href="{% url 'commodity:information' %}">母婴资讯</a>
+                    <a href="{% url 'commodity:about' %}">关于我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block html_foot %}
+
+    <div class="commod-cont-wrap">
+        <div class="commod-cont w1200 layui-clear">
+            <div class="left-nav">
+                <div class="title">所有分类</div>
+                <div class="list-box">
+                    {% for big in bigcls %}
+                        <dl>
+                            <dt>{{ big.b_title }}</dt>
+                            {% for small in big.smallclassify_set.all %}
+                                <dd><a href="{% url 'commodity:commoditys' small.id '' sid %}">{{ small.s_title }}</a>
+                                </dd>
+
+                            {% endfor %}
+                        </dl>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="right-cont-wrap">
+                <div class="right-cont">
+                    <div class="sort layui-clear">
+                        <a class="active" href="{% url 'commodity:commoditys' cid pindex 1 %}" event='volume'>销量</a>
+                        <a href="{% url 'commodity:commoditys' cid pindex 2 %}" event='price'>价格</a>
+                        <a href="{% url 'commodity:commoditys' cid pindex 3  %}" event='newprod'>新品</a>
+                        <a href="{% url 'commodity:commoditys' cid pindex 4 %}" event='collection'>收藏</a>
+                    </div>
+                    <div class="prod-number">
+                        <span>200个</span>
+                    </div>
+                    <div class="cont-list layui-clear" id="list-cont">
+
+                        {% for foo in pcindex_queryList %}
+                            <div class="item">
+                                <div class="img">
+                                    <a href="{% url 'commodity:details' foo.id bid%}" target="_blank"><img
+                                            src="/static/media/{{ foo.image }}" width="280px"
+                                            height="280px"></a>
+                                </div>
+                                <div class="text">
+                                    <p class="title">{{ foo.title }}</p>
+                                    <p class="price">
+                                        <span class="pri">￥{{ foo.current_price }}</span>
+                                        <span class="nub">{{ foo.c_sales }}付款</span>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                    <div id="demo0" style="text-align: center;">
+                        <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1">
+                            {% if pcindex_queryList.has_previous %}
+                                <a href="{% url 'commodity:commoditys' cid pindex|add:-1 sid %}"
+                                   class="layui-laypage-prev"
+                                   data-page="2">上一页</a>
+
+                            {% endif %}
+
+                            {% for p in pcList %}
+                                {% if pindex == p %}
+                                    <a href="javascript:;">{{ p }}</a>
+                                {% else %}
+                                    <a href="{% url 'commodity:commoditys' cid p sid %}">
+                                        {{ p }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                            {% if pcindex_queryList.has_next %}
+                                <a href="{% url 'commodity:commoditys' cid pindex|add:1 sid %}"
+                                   class="layui-laypage-next"
+                                   data-page="4">下一页</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+
+        {#layui.config({#}
+        {#    base: '/static/project_static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录#}
+        {#{).use(['mm', 'laypage', 'jquery'], function () {#}
+        {#    var laypage = layui.laypage, $ = layui.$,#}
+        {#        mm = layui.mm;#}
+        {#    laypage.render({#}
+        {#        elem: 'demo0'#}
+        {#        , count: 100 //数据总数#}
+        {#    });#}
+
+
+        // 模版引擎导入
+        //  var html = demo.innerHTML;
+        //  var listCont = document.getElementById('list-cont');
+        //  // console.log(layui.router("#/about.html"))
+        // mm.request({
+        //     url: '../json/commodity.json',
+        //     success : function(res){
+        //       console.log(res)
+        //       listCont.innerHTML = mm.renderHtml(html,res)
+        //     },
+        //     error: function(res){
+        //       console.log(res);
+        //     }
+        //   })
+
+        $('.sort a').on('click', function () {
+            $(this).addClass('active').siblings().removeClass('active');
+        })
+        $('.list-box dt').on('click', function () {
+            if ($(this).attr('off')) {
+                $(this).removeClass('active').siblings('dd').show()
+                $(this).attr('off', '')
+            } else {
+                $(this).addClass('active').siblings('dd').hide()
+                $(this).attr('off', true)
+            }
+        })
+
+        })
+        ;
+    </script>
+
+
+    </body>
+    </html>
+{% endblock %}

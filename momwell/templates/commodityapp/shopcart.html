@@ -1,0 +1,186 @@
+{% extends 'commodityapp/base.html' %}
+
+{% block title %}
+    shopcart
+{% endblock %}
+
+{% block nav %}
+    <div class="content content-nav-base shopcart-content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <div class="inner-cont1 w1200">
+                <div class="inner-cont2">
+                    <a href="{% url 'commodity:commoditys' '' '' '' %}" class="active">所有商品</a>
+                    <a href="{% url 'commodity:buyToday' %}">今日团购</a>
+                    <a href="{% url 'commodity:information' %}">母婴资讯</a>
+                    <a href="{% url 'commodity:about' %}">关于我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block html_foot %}
+
+    <div class="banner-bg w1200">
+        <h3>夏季清仓</h3>
+        <p>宝宝被子、宝宝衣服3折起</p>
+    </div>
+    <div class="cart w1200">
+        <form action="{% url 'commodity:settlement' %}" method="get">
+            <div class="cart-table-th">
+                <div class="th th-chk">
+                    <div class="select-all">
+                        <div class="cart-checkbox">
+                            {#    起始name=''    全选                     #}
+                            <input class="check-all check" name="select_all" id="allCheckked" type="checkbox"
+                                   value="true">
+                        </div>
+                        <label>&nbsp;&nbsp;全选</label>
+                    </div>
+                </div>
+                <div class="th th-item">
+                    <div class="th-inner">
+                        商品
+                    </div>
+                </div>
+                <div class="th th-price">
+                    <div class="th-inner">
+                        单价
+                    </div>
+                </div>
+                <div class="th th-amount">
+                    <div class="th-inner">
+                        数量
+                    </div>
+                </div>
+                <div class="th th-sum">
+                    <div class="th-inner">
+                        小计
+                    </div>
+                </div>
+                <div class="th th-op">
+                    <div class="th-inner">
+                        操作
+                    </div>
+                </div>
+            </div>
+            <div class="OrderList">
+
+                <div class="order-content" id="list-cont">
+                    <div>
+                        <p class="message">{{ message }}</p>
+                    </div>
+                    {% for comm in commIndfo %}
+
+                        <ul class="item-content layui-clear">
+                            <li class="th th-chk">
+                                <div class="select-all">
+                                    <div class="cart-checkbox">
+                                        {#    商品选择  起始name='select_all'   #}
+                                        <input class="CheckBoxShop check" id="" type="checkbox" num="all"
+                                               name="single"
+                                               value="{{ comm.id }}">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="th th-item">
+                                <div class="item-cont">
+                                    <a href="{% url 'commodity:details' comm.id '' %}"><img src="/static/media/{{ comm.image }}" alt=""></a>
+                                    <div class="text">
+                                        <div class="title">{{ comm.title }}</div>
+                                        <p><span>{{ comm.attributedetail_set.all.0 }}</span> <span>{{ comm.attributedetail_set.all.1 }}</span></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="th th-price">
+                                <span class="th-su">{{ comm.current_price }}</span>
+                            </li>
+                            <li class="th th-amount">
+                                <div class="box-btn layui-clear">
+                                    <div class="less layui-btn">-</div>
+                                    {#         数量 起始name=''       #}
+                                    <input class="Quantity-input" type="" name="nums" value="1"
+                                           disabled="disabled">
+                                    <div class="add layui-btn">+</div>
+                                </div>
+                            </li>
+                            <li class="th th-sum">
+                                <span class="sum">{{ comm.current_price }}</span>
+                            </li>
+                            <li class="th th-op">
+                                <a href="{% url 'commodity:shopcart_delete' comm.id %}">
+                                    <span>删除</span>
+                                    {#                                    class="dele-btn"#}
+                                </a>
+                            </li>
+                        </ul>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+
+
+            <div class="FloatBarHolder layui-clear">
+                <div class="th th-chk">
+                    <div class="select-all">
+                        <div class="cart-checkbox">
+                            {#                            已选 起始name='select_all'#}
+                            <input class="check-all check" id="" name="" type="checkbox" value="true">
+                        </div>
+                        <label>&nbsp;&nbsp;已选<span class="Selected-pieces">0</span>件</label>
+                    </div>
+                </div>
+                <div class="th batch-deletion">
+                    <span class="batch-dele-btn">批量删除</span>
+                </div>
+                <div class="th Settlement">
+                    {#                    <button class="layui-btn">结算</button>#}
+
+                    <input type="submit" value="结算" class="layui-btn">
+                </div>
+                <div class="th total">
+                    <p>应付：<span class="pieces-total">0</span></p>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+
+    <script type="text/javascript">
+        layui.config({
+            base: '/static/project_static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+        }).use(['mm', 'jquery', 'element', 'car'], function () {
+            var mm = layui.mm, $ = layui.$, element = layui.element, car = layui.car;
+
+            // 模版导入数据
+            // var html = demo.innerHTML,
+            // listCont = document.getElementById('list-cont');
+            // mm.request({
+            //   url: '../json/shopcart.json',
+            //   success : function(res){
+            //     listCont.innerHTML = mm.renderHtml(html,res)
+            //     element.render();
+            //     car.init()
+            //   },
+            //   error: function(res){
+            //     console.log(res);
+            //   }
+            // })
+            //
+            car.init()
+
+
+        });
+    </script>
+    <style type="text/css">
+        .message {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            margin-left: 50px;
+            color: red;
+        }
+    </style>
+    </body>
+    </html>
+{% endblock %}

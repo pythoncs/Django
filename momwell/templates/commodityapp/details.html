@@ -1,0 +1,134 @@
+{% extends 'commodityapp/base.html' %}
+{% block title %}
+    detail
+{% endblock %}
+{% block nav %}
+
+    <div class="content content-nav-base datails-content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <div class="inner-cont1 w1200">
+                <div class="inner-cont2">
+                    <a href="{% url 'commodity:commoditys' '' '' '' %}" class="active">所有商品</a>
+                    <a href="{% url 'commodity:buyToday' %}">今日团购</a>
+                    <a href="{% url 'commodity:information' %}">母婴资讯</a>
+                    <a href="{% url 'commodity:about' %}">关于我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block html_foot %}
+
+    <div class="data-cont-wrap w1200">
+        <div class="crumb">
+            <a href="{% url 'commodity:index' %}" target="_blank">首页</a>
+            <span>></span>
+            <a href="{% url 'commodity:commoditys' '' '' '' %}" target="_blank">所有商品</a>
+            <span>></span>
+            <a href="javascript:;">产品详情</a>
+        </div>
+        <div class="product-intro layui-clear">
+            <div class="preview-wrap">
+                <a href="javascript:;"><img src="/static/media/{{ commInfo.image }}" width="400px" height="400px"></a>
+            </div>
+            <div class="itemInfo-wrap">
+
+                <div class="itemInfo">
+                    <form action="{% url 'commodity:shopcart' commInfo.id %}" method="get">
+
+                        <div class="title">
+                            <h4>{{ commInfo.title }}</h4>
+                            <span><i class="layui-icon layui-icon-rate-solid"></i>收藏</span>
+                        </div>
+                        <div class="summary">
+                            <p class="reference"><span>参考价</span>
+                                <del>￥{{ commInfo.original_price }}</del>
+                            </p>
+                            <p class="activity"><span>活动价</span><strong
+                                    class="price"><i>￥</i>{{ commInfo.current_price }}
+                            </strong></p>
+                            <p class="address-box"><span>送&nbsp;&nbsp;&nbsp;&nbsp;至</span><strong class="address">江西&nbsp;&nbsp;南昌&nbsp;&nbsp;东湖区</strong>
+                            </p>
+                        </div>
+                        <div class="choose-attrs">
+                            <div class="color layui-clear"><span class="title">{{ commInfo.attribute }}</span>
+                                <div class="color-cont">
+                                    {% for attribute_detail in commInfo.attributedetail_set.all %}
+                                        <span class="btn">{{ attribute_detail }}</span>
+
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                            <div class="number layui-clear"><span class="title">数&nbsp;&nbsp;&nbsp;&nbsp;量</span>
+                                <div class="number-cont"><span class="cut btn">-</span>
+
+                                    <input
+                                            onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                            onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                            maxlength="4" type="" name="nums" value="1">
+                                    <span class="add btn">+</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="choose-btns">
+                            <button class="layui-btn layui-btn-primary purchase-btn">立刻购买</button>
+                            <input type="submit" value="加入购物车"
+                                   class="layui-btn  layui-btn-danger car-btn layui-icon layui-icon-cart-simple">
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-clear">
+            <div class="aside">
+                <h4>热销推荐</h4>
+                <div class="item-list">
+                    {% for comm in salesTop %}
+                        <div class="item">
+                            <img src="/static/media/{{ comm.image }}" width="280px" height="280px">
+                            <p><span>{{ comm.title|truncatechars:19 }}</span><span
+                                    class="pric">￥{{ comm.current_price }}</span></p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="detail">
+                <h4>详情</h4>
+                <div class="item">
+                    <img src="/static/media/{{ commInfo.deatailPic }}">
+                    {#                    width="800px" height="2402px"#}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+        layui.config({
+            base: '/static/project_static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+        }).use(['mm', 'jquery'], function () {
+            var mm = layui.mm, $ = layui.$;
+            var cur = $('.number-cont input').val();
+            $('.number-cont .btn').on('click', function () {
+                if ($(this).hasClass('add')) {
+                    cur++;
+
+                } else {
+                    if (cur > 1) {
+                        cur--;
+                    }
+                }
+                $('.number-cont input').val(cur)
+            })
+
+        });
+    </script>
+
+
+    </body>
+    </html>
+{% endblock %}

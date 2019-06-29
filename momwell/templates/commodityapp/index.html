@@ -1,0 +1,278 @@
+{% extends 'commodityapp/base.html' %}
+{% load filters %}
+{% block title %}
+    index
+{% endblock %}
+{% block nav %}
+
+    <div class="content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <div class="inner-cont1 w1200">
+                <div class="inner-cont2">
+                    <a href="{% url 'commodity:commoditys' '' '' '' %}" target="_blank" class="active">所有商品</a>
+                    <a href="{% url 'commodity:buyToday' %}" target="_blank">今日团购</a>
+                    <a href="{% url 'commodity:information' %}" target="_blank">母婴资讯</a>
+                    <a href="{% url 'commodity:about' %}" target="_blank">关于我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block html_foot %}
+
+    <div class="category-con">
+        <div class="category-inner-con w1200">
+            <div class="category-type">
+                <h3>全部分类</h3>
+            </div>
+            <div class="category-tab-content">
+                <div class="nav-con">
+                    <ul class="normal-nav layui-clear">
+
+                        {% for big in bigc %}
+                            <li class="nav-item">
+                                <div class="title">{{ big.b_title }}</div>
+                                <p>
+                                    {% for small in big.smallclassify_set.all %}
+                                        <a href="{% url 'commodity:commoditys' small.id '' '' %}">{{ small.s_title }}</a>
+                                    {% endfor %}
+
+                                </p>
+                                <i class="layui-icon layui-icon-right"></i>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="category-banner">
+            <div class="w1200">
+                <a href="{% url 'commodity:commoditys' milk_powder.id '' '' %}"><img src="/static/project_static/img/banner1.jpg"></a>
+            </div>
+        </div>
+    </div>
+    <div class="floors">
+        <div class="sk">
+            <div class="sk_inner w1200">
+                <div class="sk_hd">
+                    <a href="javascript:;">
+                        <img src="/static/project_static/img/s_img1.jpg">
+                    </a>
+                </div>
+                <div class="sk_bd">
+                    <div class="layui-carousel" id="test1">
+                        <div carousel-item>
+
+                            <div class="item-box">
+
+                                {% for comm in comms %}
+                                    {#                                    筛选出原价比时价高出51元的商品作为今日必抢#}
+                                    {% if comm.original_price|subtract:comm.current_price > 51 %}
+                                        <div class="item">
+                                            <a href="{% url 'commodity:details' comm.id ''%}"><img src="/static/media/{{ comm.image }}"></a>
+                                            <div class="title">{{ comm.title }}</div>
+                                            <div class="price">
+                                                <span>￥{{ comm.current_price }}</span>
+                                                <del>￥{{ comm.original_price }}</del>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="hot-recommend-con">
+        <div class="tlinks">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
+        <div class="hot-con1 w1200 layui-clear">
+            <div class="item">
+                <h4>热销推荐</h4>
+                <div class="big-img">
+                    <a href="{% url 'commodity:details' sales.id ''%}" target="_blank"><img src="/static/media/{{ sales.image }}" width="242px"
+                                                height="192px"></a>
+                </div>
+                <div class="small-img">
+                    <a href="{% url 'commodity:details' sales1.id ''%}" target="_blank"><img src="/static/media/{{ sales1.image }}" alt="" width="112px" height="80px"></a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="top-img">
+                    <a href="{% url 'commodity:details' sales2.id ''%}" target="_blank"><img src="/static/media/{{ sales2.image }}" width="350px" height="246"></a>
+                </div>
+                <div class="bottom-img">
+                    <a href="{% url 'commodity:details' sales3.id ''%}" target="_blank"><img src="/static/media/{{ sales3.image }}" width="168" height="200"></a>
+                    <a class="baby-cream" href="{% url 'commodity:details' sales4.id ''%}" target="_blank"><img src="/static/media/{{ sales4.image }}" width="168" height="200"></a>
+                </div>
+            </div>
+            <div class="item item1 margin0 padding0">
+                <a href="{% url 'commodity:details' sales5.id ''%}" target="_blank"><img src="/static/media/{{ sales5.image }}" width="390" height="242"></a>
+                <a href="{% url 'commodity:details' sales6.id ''%}" target="_blank"><img class="btm-img" src="/static/media/{{ sales6.image }}" width="390" height="242"></a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="product-cont w1200" id="product-cont">
+        <div class="product-item product-item1 layui-clear">
+            <div class="left-title">
+                <h4><i>1F</i></h4>
+                <img src="/static/project_static/img/icon_gou.png">
+                <h5>宝宝服饰</h5>
+            </div>
+            <div class="right-cont">
+
+                <a href="{% url 'commodity:commoditys' wear.id '' '' %}" class="top-img"><img src="/static/project_static/img/img12.jpg" alt=""></a>
+                <div class="img-box">
+                    {% for comm in wear_comm %}
+                        <a href="{% url 'commodity:details' comm.id ''%}"><img src="/static/media/{{ comm.image }}"></a>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <div class="product-item product-item2 layui-clear">
+            <div class="left-title">
+                <h4><i>2F</i></h4>
+                <img src="/static/project_static/img/icon_gou.png">
+                <h5>奶粉辅食</h5>
+            </div>
+            <div class="right-cont">
+                <a href="{% url 'commodity:commoditys' milk.id '' '' %}" class="top-img"><img src="/static/project_static/img/img12.jpg" alt=""></a>
+                <div class="img-box">
+                    {% for comm in milk_comm %}
+                        <a href="{% url 'commodity:details' comm.id '' %}"><img src="/static/media/{{ comm.image }}"></a>
+
+                    {% endfor %}
+
+                    {% for comm in food_comm %}
+                        <a href="javascript:;"><img src="/static/media/{{ comm.image }}"></a>
+
+                    {% endfor %}
+
+
+                </div>
+            </div>
+        </div>
+        <div class="product-item product-item3 layui-clear">
+            <div class="left-title">
+                <h4><i>3F</i></h4>
+                <img src="/static/project_static/img/icon_gou.png">
+                <h5>宝宝用品</h5>
+            </div>
+            <div class="right-cont">
+                <a href="{% url 'commodity:commoditys' things.id '' '' %}" class="top-img"><img src="/static/project_static/img/img12.jpg" alt=""></a>
+                <div class="img-box">
+                    {% for child in childs %}
+                        <a href="{% url 'commodity:details' child.id '' %}"><img src="/static/media/{{ child.image }}"></a>
+
+                    {% endfor %}
+                    {% for shoes in child_shoes %}
+                        <a href="{% url 'commodity:details' shoes.id  ''%}"><img src="/static/media/{{ shoes.image }}"></a>
+
+                    {% endfor %}
+
+                    <a href="javascript:;"><img src="/static/project_static/img/s_img11.jpg"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-list-box" id="product-list-box">
+        <div class="product-list-cont w1200">
+            <h4>更多推荐</h4>
+            <div class="product-item-box layui-clear">
+                {% for recomment in more_recommend %}
+                    <div class="list-item">
+                        <a href="{% url 'commodity:details' recomment.id '' %}"><img src="/static/media/{{ recomment.image }}" width="160px"
+                                                    height="160px"></a>
+                        <p>{{ recomment.title }}</p>
+                        <span>￥{{ recomment.current_price }}</span>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="footer">
+        <div class="ng-promise-box">
+            <div class="ng-promise w1200">
+                <p class="text">
+                    <a class="icon1" href="javascript:;">7天无理由退换货</a>
+                    <a class="icon2" href="javascript:;">满99元全场免邮</a>
+                    <a class="icon3" style="margin-right: 0" href="javascript:;">100%品质保证</a>
+                </p>
+            </div>
+        </div>
+        <div class="mod_help w1200">
+            <p>
+                <a href="javascript:;">关于我们</a>
+                <span>|</span>
+                <a href="javascript:;">帮助中心</a>
+                <span>|</span>
+                <a href="javascript:;">售后服务</a>
+                <span>|</span>
+                <a href="javascript:;">母婴资讯</a>
+                <span>|</span>
+                <a href="javascript:;">关于货源</a>
+            </p>
+            <p class="coty">母婴商城版权所有 &copy; 2012-2020 More Templates <a href="http://www.cssmoban.com/" target="_blank"
+                                                                        title="模板之家">模板之家</a> - Collect from <a
+                    href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        layui.config({
+            base: '/static/project_static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+        }).use(['mm', 'carousel'], function () {
+            var carousel = layui.carousel,
+                mm = layui.mm;
+            var option = {
+                elem: '#test1'
+                , width: '100%' //设置容器宽度
+                , arrow: 'always'
+                , height: '298'
+                , indicator: 'none'
+            }
+            carousel.render(option);
+            // 模版引擎导入
+            // var ins = carousel.render(option);
+            // var html = demo.innerHTML;
+            // var listCont = document.getElementById('list-cont');
+            // // console.log(layui.router("#/about.html"))
+            //  mm.request({
+            //    url: '../json/index.json',
+            //    success : function(res){
+            //      console.log(res)
+            //      listCont.innerHTML = mm.renderHtml(html,res)
+            //      ins.reload(option);
+            //    },
+            //    error: function(res){
+            //      console.log(res);
+            //    }
+            //  })
+
+
+        });
+    </script>
+    </body>
+    </html>
+{% endblock %}

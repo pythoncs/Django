@@ -1,0 +1,107 @@
+{% extends 'commodityapp/base.html' %}
+
+{% block title %}
+    BuyToday
+{% endblock %}
+{% block html_foot %}
+    <div class="banner-box">
+        <div class="banner"></div>
+    </div>
+    <div class="product-list-box">
+        <div class="product-list w1200">
+            <div class="tab-title">
+                <a href="javascript:;" class="active tuang" data-content="tuangou">今日团购</a>
+                <a href="{% url 'commodity:buyToday' %}" data-content="yukao">明日预告</a>
+            </div>
+            <div class="list-cont" cont='tuangou'>
+                <div class="item-box layui-clear">
+
+                    {% for bt in bts %}
+
+                        <div class="item">
+                            <a href="{% url 'commodity:details' '' bt.id %}" target="_blank">
+                                <img src="/static/media/{{ bt.image }}" width="290px" height="320px " alt="">
+                            </a>
+                            <div class="text-box">
+                                <p class="title">{{ bt.title }}</p>
+                                <p class="plic">
+                                    <span class="ciur-pic">￥{{ bt.current_price }}</span>
+                                    <span class="Ori-pic">￥{{ bt.original_price }}</span>
+                                    <span class="discount">{{ bt.b_reducedRate }}折</span>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                </div>
+                <div id="demo0" style="text-align: center;"></div>
+            </div>
+            <div id="demo0" style="text-align: center;"></div>
+        </div>
+    </div>
+    </div>
+    <div class="footer-wrap">
+        <div class="footer w1200">
+            <div class="title">
+                <h3>团购销量榜</h3>
+            </div>
+            <div class="list-box layui-clear" id="footerList">
+
+                {% for slaes in salesTop %}
+                    <div class="item">
+                        <a href="{% url 'commodity:details' '' slaes.id %}" target="_blank">
+                            <img src="/static/media/{{ slaes.image }}" alt="img" width="320px" height="400px">
+                        </a>
+                        <div class="text">
+                            <div class="right-title-number">1</div>
+                            <div class="commod">
+                                <p>{{ slaes.title|truncatechars:28 }}</p>
+                                <span>￥{{ slaes.current_price }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+    <script>
+
+        layui.config({
+            base: '/static/project_static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+        }).use(['mm', 'laypage', 'jquery'], function () {
+            var laypage = layui.laypage, $ = layui.$;
+            mm = layui.mm;
+            laypage.render({
+                elem: 'demo0'
+                , count: 100 //数据总数
+            });
+
+
+            $('body').on('click', '*[data-content]', function () {
+                $(this).addClass('active').siblings().removeClass('active')
+                var dataConte = $(this).attr('data-content');
+                $('*[cont]').each(function (i, item) {
+                    var itemCont = $(item).attr('cont');
+                    console.log(item)
+                    if (dataConte === itemCont) {
+                        $(item).removeClass('layui-hide');
+                    } else {
+                        $(item).addClass('layui-hide');
+                    }
+                })
+            })
+
+
+            {);
+    </script>
+
+
+    </body>
+    </html>
+{% endblock %}
