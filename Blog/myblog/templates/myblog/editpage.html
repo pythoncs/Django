@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑</title>
+    <style type="text/css">
+         .biaoti2{
+            margin-left: 150px;
+            font-family: "AR PL UKai TW MBE";
+            font-size: 16px;
+
+        }
+        .ccontent2{
+            margin-left: 150px;
+            font-family: "AR PL UKai TW MBE";
+            font-size: 16px;
+            float: left;
+            margin-top: 10px;
+
+        }
+         .tt2{
+            margin-top: 10px;
+        }
+        .tijiao2{
+            {#margin-left: 150px;#}
+            display: block;
+            margin: 0 auto;
+        }
+        .top4{
+            width: 100%;
+            height: 50px;
+            background: gold;
+        }
+        .kong2{
+            width: 100%;
+            height: 10px;
+            background: white;
+        }
+        .welcome4{
+            display: inline-block;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            line-height: 50px;
+            margin-left: 30px;
+        }
+        .welcome4:hover{
+            color: red;
+        }
+        .hrc2{
+            display: inline-block;
+            margin-left: 666px;
+            letter-spacing: 1px;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+
+        }
+    </style>
+</head>
+<body>
+{% extends 'myblog/index.html' %}
+{% block content %}
+<form method="post" action="{% url 'blog:editpagehandle' %}">
+    {% csrf_token %}
+     <div class="top4">
+        <p class="welcome4">Welcome to the rocket area !&nbsp;</p>
+        <p class="hrc2">Houston Rocket Championship</p>
+    </div>
+    <div class="kong2"></div>
+
+    <span class="biaoti2">标题:</span>
+    <input type="text" name="title"><br>
+    <span class="ccontent2">内容:</span>
+    <textarea class="tt2" name="content" style="width: 80%;height: 300px"></textarea><br><br><br>
+    <input class="tijiao2" type="submit" value="提交">
+{% endblock %}
+</form>
+</body>
+</html>

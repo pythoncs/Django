@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <style type="text/css">
+              .top5{
+            width: 100%;
+            height: 50px;
+            background: gold;
+        }
+        .kong3{
+            width: 100%;
+            height: 10px;
+            background: white;
+        }
+         .welcome5{
+            display: inline-block;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            line-height: 50px;
+            margin-left: 30px;
+        }
+        .welcome5:hover{
+            color: red;
+        }
+        .hrc3{
+            display: inline-block;
+            margin-left: 666px;
+            letter-spacing: 1px;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+        }
+        .yonghu{
+            margin-left: 625px;
+            font-family: "AR PL UKai TW MBE";
+            font-size: 16px;
+        }
+        .mima{
+            margin-left: 630px;
+            font-family: "AR PL UKai TW MBE";
+            font-size: 16px;
+            letter-spacing: 2.2px;
+        }
+        .denglu{
+            display: block;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+        .utext{
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+{% extends 'myblog/index.html' %}
+{% block content %}
+<form method="post" action="{% url 'blog:registerhandle' %}">
+    {% csrf_token %}
+     <div class="top5">
+        <p class="welcome5">Welcome to the rocket area !&nbsp;</p>
+        <p class="hrc3">Houston Rocket Championship</p>
+    </div>
+    <div class="kong3"></div>
+    <span class="yonghu">用户名:</span>
+    <input class="utext" type="text" name="uname"><br>
+    <span class="mima"> 密码 :</span>
+   <input class="utext" type="password" name="upwd"><br>
+    <input class="denglu" type="submit" value="注册">
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改成功</title>
+    <style type="text/css">
+        .topp{
+            width: 100%;
+            height: 50px;
+            background: gold;
+        }
+        .welcome6{
+            display: inline-block;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            line-height: 50px;
+            margin-left: 30px;
+        }
+        .welcome6:hover{
+            color: red;
+        }
+        .hrc4{
+            display: inline-block;
+            margin-left: 666px;
+            letter-spacing: 1px;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+        }
+        .black{
+            font-size: 22px;
+            font-family: "AR PL UKai TW MBE";
+            color: red;
+            text-decoration: none;
+        }
+        .bblack{
+            display: inline-block;
+            margin-left: 622px;
+        }
+        .bblack:hover{
+            color: black;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+{% extends 'myblog/index.html' %}
+{% block content %}
+    <div class="topp">
+        <p class="welcome6">Welcome to the rocket area !&nbsp;</p>
+        <p class="hrc4">Houston Rocket Championship</p>
+    </div>
+    <p class="bblack"><a class="black" href="{% url 'blog:index' %}">回首页</a></p>
+{% endblock %}
+</body>
+</html>

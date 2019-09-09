@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- Start Content -->
+    <div class="content blog cf">
+        <div class="grid-1">
+            <h1>Blog</h1>
+            {% for foo in blpgpage %}
+                <p><strong>{{ foo.b_intro }}</strong>
+                </p>
+            {% endfor %}
+
+
+        </div><!-- end grid-1 -->
+
+        <!-- Start Blog Posts -->
+        {% for post in post_list %}
+            <div class="grid-4">
+                <a href="{% url 'hardknocks2:detail' post.id %}"><img src="/{{ post.p_iamge }}" width="454" height="335"
+                                                                      alt="Blog Preview"/></a>
+                <h2>{{ post.p_title }}</h2>
+                {#            <p>{{ post.p_content  }}</p>#}
+                <p>{% autoescape off %}
+                    {{ post.p_content | truncatechars_html:180 }}
+                {% endautoescape %}</p>
+                <a href=" {% url 'hardknocks2:detail' post.id %}" class="btn">Read More</a>
+            </div><!-- end grid-4 -->
+
+            <div class="grid-3 last">
+                <ul class="blog-desc">
+                    <li class="views">Views: <span>{{ post.p_views }}</span></li>
+                    <li class="comments">Comments: <span>{{ post.comment_set.count }}</span></li>
+                    <li>Date: <span>{{ post.p_date|date:'Y-m-d' }}</span></li>
+                    <li>Author: <span>{{ post.p_author }}</span></li>
+                    <li>Category: <span>{{ post.p_cate }}</span></li>
+                    <li>Tags: <span>
+                        {% for tag in post.p_tags.all %}
+                            <a href="#">{{ tag }}</a>
+                        {% endfor %}
+
+                        </span></li>
+                    <li class="likes">Likes: <span >{{ post.p_likes }}</span></li>
+                </ul>
+
+            </div><!-- end grid-3 -->
+        {% endfor %}
+
+
+    </div><!-- end content -->
+    </div><!-- end container -->
+{% endblock %}

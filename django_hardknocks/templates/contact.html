@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+$(function () {
+$('.send').click(function () {
+alert('123')
+})
+})
+{% block content %}
+    <div class="content contact cf">
+        <div class="grid-1">
+            <h1>Contact Us</h1>
+            {% for us in us_list %}
+                <p><strong>{{ us.c_content }}</strong>
+                </p>
+            {% endfor %}
+
+
+        </div>
+
+        <div class="grid-4">
+            <h2>Use the form below to get in touch</h2>
+            <form id="commentForm" method="post" action="{% url 'hardknocks:contact' %}">
+                {% csrf_token %}
+                <fieldset class="text-fields">
+                    <input type="text" name="name" id="cname" class="required cname"
+                           value="Your name" onfocus="if (this.value =='Your name'){value =''}"
+                           onblur="if (this.value ==''){value='Your name'}"/>
+                    <input type="text" name="cemail" id="cemail" class="required email"
+                           value="Your email" onfocus="if (this.value =='Your email'){value =''}"
+                           onblur="if (this.value ==''){value='Your email'}">
+                </fieldset>
+                <fieldset class=" text-block">
+                    <textarea name="ccomment" class="required comment"
+                              onfocus="if(this.value == 'Type your message here') { this.value = ''; }"
+                              onblur="if (value ==''){value='Type your message here'} ">Type your message here</textarea>
+                </fieldset>
+                <button class="send">Send</button>
+            </form>
+        </div>
+
+        <div class="grid-3 extend last">
+            <h2>Contact Details</h2>
+            <ul class="contact-details">
+                {% for us in us_list %}
+                    <li>Tel: <span>{{ us.u_tel }}</span></li>
+                    <li>Fax: <span>{{ us.u_fax }}</span></li>
+                    <li>Email: <span><a href="mailto:info@example.com">{{ us.u_email }}</a></span></li>
+                    <li>Address<br/> <span>{{ us.u_address }}</span></li>
+                {% endfor %}
+
+
+            </ul>
+        </div>
+        <div class="grid-1">
+            <img src="/static/img/slider/slider4.jpg" width="710" height="300" alt="">
+{#              #}
+        </div>
+    </div><!-- end content -->
+    </div><!-- end container -->
+{% endblock %}

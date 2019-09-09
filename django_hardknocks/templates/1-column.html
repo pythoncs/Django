@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Start Content -->
+    <div class="content cf">
+        <div class="grid-1 cf">
+            {% for work in works %}
+                <h1>{{ work.wp_title }}</h1>
+                <p><strong>{{ work.wp_cintent }}</strong>
+                </p>
+
+            {% endfor %}
+
+            <ul id="filter">
+                <li class="current"><a href="#">All</a></li>
+                {% for workcategory in workcategory_list %}
+                    <li><a href="#">{{ workcategory.wc_name }}</a></li>
+
+                {% endfor %}
+
+
+            </ul>
+        </div>
+        <div class="gallery">
+            <ul id="portfolio-one">
+                {% for worktwo in worktwo_list %}
+                    <li class="{{ worktwo.w_class }}">
+                        <h2>{{ worktwo.w_title }}</h2>
+                        <a href="/{{ worktwo.w_image }}" style="width: 206px;height: 206px;" rel="prettyPhoto" alt="Preview"><img
+                                src="/{{ worktwo.w_image }}" alt="" height="483" width="730"/></a>
+                        <div class="project-desc">
+                            <strong>Project Description</strong>
+                            <p>{{ worktwo.w_describe }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div><!-- end grid-1 -->
+    </div><!-- end content -->
+    <!-- end container -->
+{% endblock %}

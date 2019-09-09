@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <!-- Start Content -->
+    <div class="content about cf">
+
+        <div class="slider">
+            <!-- Start Nivo Slider -->
+{#            <div class="slider-wrapper theme-default">#}
+{#                <div id="slider" class="nivoSlider">#}
+{#                    <img src="/static/img/slider/slider.jpg" alt="Happiness" width="750" height="300"/>#}
+{#                    <img src="/static/img/slider/slider4.jpg" alt="Happiness" width="750" height="300"/>#}
+{#                    <img src="/static/img/slider/slider3.jpg" alt="Happiness" width="750" height="300"/>#}
+{#                </div><!-- end inner slider -->#}
+            <div class="slider-wrapper theme">
+                <div id="sliders" class="nivoSliders">
+                    <img src="/static/img/slider/slider.jpg" alt="Happiness" width="750" height="300"/>
+{#                    <img src="/static/img/slider/slider4.jpg" alt="Happiness" width="750" height="300"/>#}
+{#                    <img src="/static/img/slider/slider3.jpg" alt="Happiness" width="750" height="300"/>#}
+                </div><!-- end inner slider -->
+            </div><!-- end slider -->
+        </div><!-- end slider -->
+        <div class="grid-1 intro cf">
+            {% for abouthd in abouthd_list %}
+                <h1>{{ abouthd.a_about }}</h1>
+                <div class="intro-text">
+                    <h2>{{ abouthd.a_title }}</h2>
+                    <p>{{ abouthd.a_intro }}</p>
+                    <!--<button class="btn">Button</button> -->
+                </div>
+                <div class="intro-img">
+                    <img style="width: 300px; height: 210px" src="/{{ abouthd.a_image }}"/>
+                </div>
+            {% endfor %}
+
+
+        </div><!-- end grid-1 -->
+
+        <div class="grid-1 science">
+
+
+            <h1>The Science Behind Hardknocks</h1>
+            <ul>
+                {% for science in science_list %}
+                    <li>
+                        <img src="/{{ science.s_image }}" width="162" height="80" alt="Icon"/>
+                        <h2>{{ science.s_title }}</h2>
+                        <p>{{ science.s_content }}</p>
+                    </li>
+                {% endfor %}
+
+
+                <li class="last">
+                    <img src="/static/img/icon-4.png" width="162" height="80" alt="Icon"/>
+                    <h2>Launch</h2>
+                    <p>Lorem ipsumia dolor sit ametis and the consectetur adipisicing elit, sed dos eiusmod tempor
+                        incididunt uno labores set dolore magna an sofar.</p>
+                </li>
+            </ul>
+        </div><!-- end grid-1 science-->
+
+        <div class="grid-2 what-we-do cf">
+            <h1>Our Skills</h1>
+            <ul class="skills">
+                {% for skill in skill_list %}
+                    <li><span class="ux">{{ skill.s_title }}</span><em>{{ skill.s_level }}</em></li>
+                {% endfor %}
+            </ul>
+        </div><!-- end grid-2 -->
+
+        <div class="grid-2 what-we-do last">
+            <h1>Focus Points</h1>
+            {% for focuspoints in focuspoints_list %}
+                <img src="/{{ focuspoints.f_image }}" width="325" height="230" alt="Info Graph"/>
+
+            {% endfor %}
+
+        </div><!-- end grid-2 -->
+
+        <div class="grid-1 the-team">
+            <h1>Meet the team</h1>
+            <ul class="team">
+                {% for team in team_list %}
+                    <li><p>{{ team.t_intro }}</p>
+                        <p class="team-member">{{ team.t_name }}<br/><span>{{ team.t_post }}</span></p>
+                        <img src="/{{ team.t_picture }}" width="" height="" alt="Team member"/></li>
+                {% endfor %}
+
+                <li class="last"><p>Lorem ipsumia dolor sit ametis and the consectetur adipisicing elit, sed dos then
+                    eiusmod and tempor incid idunt uno labories set dolore magnal an sofar then some more awesome.
+                    Thanks</p>
+                    <p class="team-member">Ryan Brock<br/><span>Developer</span></p>
+                    <img src="/static/img/team-2.png" width="" height="" alt="Team member"/></li>
+            </ul>
+        </div><!-- end grid-1 -->
+    </div><!-- end content -->
+    </div><!-- end container -->
+{% endblock %}

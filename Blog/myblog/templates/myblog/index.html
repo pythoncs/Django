@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>RUN AS ONE !</title>
+    <style type="text/css">
+          *{
+            margin: 0;
+            padding: 0;
+        }
+        .clearfix:before,
+        .clearfix:after{
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .clearfix{
+            zoom:1;
+        }
+        .top{
+            width: 100%;
+            height: 50px;
+            background:black;
+        }
+
+        .rao{
+            color: red;
+            font-size: 40px;
+            font-weight: bold;
+          }
+        .hr{
+            text-align: center;
+            line-height: 50px;
+          }
+        .function{
+            height: 50px;
+            width: 100%;
+            background: gold;
+        }
+        .all_left{
+            width: 50%;
+            {#height: 2000px;#}
+            background: black;
+            float: left;
+        }
+        .all_right{
+            width: 50%;
+            {#height: 2000px;#}
+            background: red;
+            float: left;
+        }
+        .welcome{
+            display: inline-block;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            line-height: 50px;
+            margin-left: 30px;
+        }
+        .welcome:hover{
+            color: red;
+            cursor: none;
+        }
+        .write{
+            display: inline-block;
+            margin-left: 690px;
+        }
+        .wtitle{
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            line-height: 50px;
+        }
+        .wtitle:hover{
+            color: red;
+        }
+        .sin{
+            display: inline-block;
+            margin-left: 15px;
+        }
+        .ssin{
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            line-height: 50px;
+        }
+        .ssin:hover{
+            color: red;
+        }
+        .rgr{
+            display: inline-block;
+            margin-left: 15px;
+        }
+        .register{
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            line-height: 50px;
+        }
+        .register:hover{
+            color: red;
+
+        }
+        .ul{
+            width: 80%;
+            margin-right: 0;
+        }
+        .li{
+            width: 550px;
+            height: 20px;
+            margin-top: 5px;
+            margin-left: 200px;
+        }
+        .li a{
+            color: red;
+            text-decoration: none;
+            text-align: center;
+            font-family: "AR PL UKai TW MBE";
+        }
+        .li a:hover{
+            color: yellow;
+            text-decoration: underline;
+        }
+         .ul2{
+            width: 80%;
+            margin-right: 200px;
+            list-style: none;
+        }
+        .li2{
+            width: 550px;
+            height: 20px;
+            margin-top: 5px;
+            margin-left: 100px;
+            color: black;
+            text-decoration: none;
+            font-family: "AR PL UKai TW MBE";
+            display: inline-block;
+        }
+        .l1{
+            margin-top: 10px;
+        }
+        .r1{
+            margin-top: 10px;
+        }
+        .b1{
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="top">
+    <p class="hr"><i class="rao">RUN AS ONE</i></p>
+</div>
+{% block content %}
+    <div class="function">
+
+        <p class="welcome">Welcome to the rocket area !&nbsp;&nbsp;{{ uname }}</p>
+        <p class="write"><a class="wtitle" href="{% url 'blog:editpage' %}">Write</a></p>
+        <p class="sin"><a class="ssin" href="{% url 'blog:sign' %}">Sign in</a></p>
+        <p class="rgr"><a class="register" href="{% url 'blog:register' %}">Register</a></p>
+    </div>
+    <div class="all_left">
+        <ul class="ul">
+            {% for foo in list %}
+                <li class="li"><a href="{% url 'blog:detail' foo.pk %}">{{ foo.atitle }}</a></li>
+            {% endfor %}
+        </ul>
+        {% load static from staticfiles %}
+        <img class="l1" src="{% static '/static/myblog/harden.jpg' %}" alt="harden">
+    </div>
+    <div class="all_right">
+        <ul class="ul2">
+            {% for foo in list %}
+                <li class="li2">{{ foo.apub_datetime }}&nbsp;&nbsp;&nbsp;阅读人数:{{ foo.aread }}</li>
+            {% endfor %}
+        </ul>
+        <img class="r1" src="{% static '/static/myblog/timg.jpeg' %}" alt="harden" width="650px" height="457px">
+    </div>
+{#    <img class="b1" src="{% static '/static/myblog/yaomai.jpeg' %}" alt="run as one" width="1000px">#}
+    <img src="{% static '/static/myblog/jieshuo.png' %}" alt="解说">
+{% endblock %}
+
+</body>
+</html>

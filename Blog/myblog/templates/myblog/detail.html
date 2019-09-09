@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .btt{
+            width: 800px;
+            height: 50px;
+            {#border: darkgrey 1px solid;#}
+            margin: 0 auto;
+        }
+
+        h1{
+            font-family: 微软雅黑;
+            letter-spacing: 1px;
+            display: block;
+            text-align: center;
+            margin-top: -1px;
+        }
+        .neirong{
+            margin-top: 50px;
+            color: black;
+            font-size: 18px;
+            line-height: 20px;
+            font-family: "AR PL UKai TW MBE";
+            text-indent: 2em;
+        }
+        .tcontent{
+            width: 80%;
+            {#height: 500px;#}
+            background: red;
+            margin: 0 auto;
+        }
+        .top2{
+            width: 100%;
+            height: 50px;
+            background: gold;
+        }
+        .bacground{
+            width: 100%;
+            background: black;
+        }
+        .modify{
+            text-decoration: none;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            color: black;
+            line-height: 50px;
+            margin-left: 810px;
+        }
+        .modify:hover{
+            color: red;
+        }
+        .delete{
+            text-decoration: none;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            color: black;
+            line-height: 50px;
+            margin-left: 10px;
+        }
+        .delete:hover{
+            color: red;
+        }
+        .welcome2{
+            display: inline-block;
+            color: black;
+            font-size: 20px;
+            font-family: "Nimbus Roman No9 L";
+            line-height: 50px;
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+{% extends 'myblog/index.html' %}
+{% block content %}
+    <div class="top2">
+        <p class="welcome2">Welcome to the rocket area !</p>
+        <a class="modify" href="{% url 'blog:change' list.pk %}">Modify</a>
+        <a class="delete" href="{% url 'blog:del' list.pk %}">Delete</a>
+    </div>
+    <div class="bacground">
+        <div class="tcontent">
+            <div class="btt">
+                <h1>{{ list.atitle }}</h1>
+            </div>
+            <p class="neirong">{{ list.acontent }}</p>
+        </div>
+    </div>
+
+{% endblock %}
+
+</body>
+</html>
+
+
+

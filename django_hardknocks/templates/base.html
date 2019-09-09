@@ -1,0 +1,166 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <title>Hardknocks Agency{% block title %}{% endblock title %}</title>
+    <meta name="description" content=""/>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+    <!-- Load main style sheets -->
+    {#<link rel="stylesheet" href="{% static 'css/styles.css' %}" />#}
+    <link rel="stylesheet" href="{% static 'css/boilerplate.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/modules.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/navigation.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/Pacifico.ttf' %}"/>
+    <link rel="stylesheet" href="{% static 'css/prettyPhoto.css' %}"/>
+    {% block login %}
+
+    {% endblock %}
+    <link rel="stylesheet" href="/static/nivo-slider/themes/pascal/pascal.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/static/nivo-slider/themes/orman/orman.css" type="text/css" media="screen"/>
+
+
+    {#<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />#}
+
+    <!-- Default stylesheets for the slider -->
+    <link rel="stylesheet" href="{% static 'nivo-slider/themes/default/default.css' %}" type="text/css" media="screen"/>
+
+    <!-- Load Javascript and Jquery -->
+    <script src="/static/js/jquery-1.7.1.min.js"></script>
+    <script src="/static/js/jquery.nivo.slider.pack.js"></script>
+    <script src="/static/js/jquery.prettyPhoto.js"></script>
+    <script src="/static/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="/static/js/background-image.js"></script>
+    <script type="text/javascript" src="/static/js/filter-gallery.js"></script>
+
+
+    <!-- Nivo Slider -->
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('#slider').nivoSlider();
+        });
+    </script>
+
+    <!-- Fullsscreen Background -->
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            var background = new Easy_Background({
+                background_color: "none",
+                pattern: "{% static 'img/patterns/pattern-1.png' %}",
+                autoplay: "true",
+                autoplayTime: 5,
+
+
+                images: [
+                    {% for side in side_list %}
+                        "/{{ side.s_cover }}",
+                    {% endfor %}
+
+                ],
+
+
+                images_sizing: "fill", // fill || adjust || stretch || repeat
+
+                animationIn: {
+                    attribute: ["y", "alpha"], // x || y || alpha
+                    value: ["1px", 0],
+                    easing: ["easeOutCubic", "swing"],
+                    time: [0.7, 1.5],
+                    delay: 0
+                },
+                animationOut: {
+                    attribute: [],
+                    value: [],
+                    easing: [],
+                    time: [],
+                    delay: 0
+                }
+            });
+            $('body').click(background.next);
+        });
+    </script>
+
+</head>
+<body>
+<!-- Start container -->
+<div id="container">
+    <!-- Side view contains the logo and header section -->
+    <div class="sideview">
+        <div class="logo">
+            <a href="{% url 'hardknocks:index' %}"><img src="/static/img/layout/logo.png" width="250" height="146"
+                                                        alt="Logo"/></a>
+        </div><!-- end logo -->
+        <!-- Start menu -->
+        <div class="menu">
+            <ul class="nav">
+                <li><a href="{% url 'hardknocks:index' %}">Home<span class="desc">Back to the home page</span></a></li>
+
+                    {% if user.is_authenticated %}
+                        <li class="dropdown"><a href="{% url 'hardknocks3:login' %}">Login<span
+                        class="desc">
+                    welcome {{ user.username }}!
+               </span></a>
+                    <ul>
+                        <li><a href="{% url 'hardknocks3:register' %}">Register</a></li>
+                        <li><a href="{% url 'hardknocks3:login' %}">Login</a></li>
+                        <li><a href="{% url 'hardknocks3:logout' %}">logout</a></li>
+                    </ul>
+                </li>
+                        {% else %}
+                          <li class="dropdown"><a href="{% url 'hardknocks3:login' %}">Login<span
+                        class="desc">Please login</span></a>
+                    <ul>
+                        <li><a href="{% url 'hardknocks3:register' %}">Register</a></li>
+                        <li><a href="{% url 'hardknocks3:login' %}">Login</a></li>
+                    </ul>
+                </li>
+                    {% endif %}
+
+
+                <li><a href="{% url 'hardknocks:about' %}">About<span class="desc">Meet the team</span></a></li>
+                <li class="dropdown"><a href="{% url 'hardknocks:ourwork' %}">Our Work<span class="desc">Clients and projects</span></a>
+                    <ul>
+                        <li><a href="{% url 'hardknocks:onecolumn' %}">Case show 2</a></li>
+                        <li><a href="{% url 'hardknocks:ourwork' %}">Case Show</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a href="{% url 'hardknocks2:blog' %}">Blog<span
+                        class="desc">Catch up on some news</span></a>
+                    <ul>
+                        <li><a href="{% url 'hardknocks2:blogdetail' %}">Single Blog Page</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'hardknocks:contact' %}" class="last">Contact us<span
+                        class="desc">Get in touch</span></a></li>
+            </ul>
+        </div><!-- end menu -->
+    </div><!-- end sideview -->
+
+    {% block content %}
+        <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">Website Template</a></div>
+
+        <!-- Start Content -->
+        <div class="content cf">
+
+        </div><!-- end content -->
+        </div><!-- end container -->
+        <!-- Start footer -->
+
+    {% endblock content %}
+
+
+<div id="footer" class="clearfix cf">
+    <p>Hardknocks 2013 &copy; More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a>
+    </p>
+    <ul class="clean">
+        <li><a href="#"><img src="/static/img/layout/rss.png" width="25" height="18" alt="Rss Feed"/></a></li>
+        <li><a href="#"><img src="/static/img/layout/twitter.png" width="25" height="18" alt="Twitter"/></a></li>
+        <li><a href="#"><img src="/static/img/layout/dribbble.png" width="25" height="18" alt="Dribbble"/></a></li>
+        <li><a href="#"><img src="/static/img/layout/facebook.png" width="8" height="18" alt="Facebook"/></a></li>
+    </ul>
+</div><!-- end footer -->
+
+</body>
+</html>
